@@ -23,7 +23,7 @@ jobs:
 
       - name: Inspect values inside producer 
         run: |
-          echo "NAME (from env): $name"
+          echo "NAME (from env): $NAME"
           echo "name (from step output): ${{steps.generate-name.outputs.name}}"
 
   consumer:
