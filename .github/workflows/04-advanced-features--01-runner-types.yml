@@ -16,8 +16,17 @@ jobs:
     steps:
       - run: echo "Hello ubuntu-24.04"
 
-  third-party-hosted:
-    name: Namespace
-    runs-on: namespace-profile-default
+  running-in-container:
+    name: Alpine
+    runs-on: ubuntu-24.04
+    container:
+      image: alpine:latest
     steps:
-      - run: echo "Hello namespace-profile-default"
+      - run: echo "Hello container"
+
+  # Requires setup from third party
+  # third-party-hosted:
+  #   name: Namespace
+  #   runs-on: namespace-profile-default
+  #   steps:
+  #     - run: echo "Hello namespace-profile-default"
