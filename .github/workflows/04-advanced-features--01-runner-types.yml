@@ -24,14 +24,6 @@ jobs:
     steps:
       - run: echo "Hello container"
 
-  running-on-bigger-vm:
-    name: Big Ubuntu
-    runs-on:
-      group: ubuntu-runners
-      labels: ubuntu-24.04-16core
-    steps:
-      - run: echo "Hello ubuntu-24.04-16core"
-
   # Requires setup from third party
   # third-party-hosted:
   #   name: Namespace
