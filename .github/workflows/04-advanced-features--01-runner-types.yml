@@ -1,0 +1,11 @@
+name: Runner types
+
+on:
+  workflow_dispatch:
+
+jobs:
+  self-hosted:
+    name: Raspberry Pi 4
+    runs-on: atri-rpi
+    steps:
+      - run: echo "Hello atri-rpi"
