@@ -1,0 +1,36 @@
+name: Passing variables between jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  producer:
+    runs-on: ubuntu-24.04
+
+    outputs:
+      name: ${{steps.generate-name.outputs.name}}
+    steps:
+      - name: Generate and export name
+        id: generate-name
+        run: |
+          name=Atri
+
+          # step output, for job output
+          echo "name=${name}" >> "$GITHUB_OUTPUT"
+
+          # job scoped env var
+          echo "NAME=${name}" >> "$GITHUB_ENV"
+
+      - name: Inspect values inside producer 
+        run: |
+          echo "NAME (from env): $name"
+          echo "name (from step output): ${{steps.generate-name.outputs.name}}
+
+  consumer:
+    runs-on: ubuntu-24.04
+    needs: producer
+    steps:
+      - name: Inspect values inside consumer
+        run: |
+          echo "value from producer: ${{needs.producer.outputs.name}}"
+          echo "env var NAME in consumer: ${NAME:-<NO NAME GIVEN>}"
