@@ -9,3 +9,15 @@ jobs:
     runs-on: atri-rpi
     steps:
       - run: echo "Hello atri-rpi"
+  
+  github-hosted:
+    name: Ubuntu 24.04
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Hello ubuntu-24.04"
+
+  third-party-hosted:
+    name: Namespace
+    runs-on: namespace-profile-default
+    steps:
+      - run: echo "Hello namespace-profile-default"
