@@ -1,0 +1,33 @@
+name: Atrifacts (Artifacts actually, used for persisting data)
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  atrifact-producer:
+    name: Produce Atrifact
+    runs-on: atri-rpi
+    steps:
+      - name: Create Atrifact File
+        run: |
+          echo "This is stored as an atrifact" > atrifact.txt
+          echo "Generated on $(date)" >> atrifact.txt
+
+      - name: Upload Atrifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: example-atrifact
+          path: atrifact.txt
+
+  atrifact-consumer:
+    name: Consume Atrifact
+    runs-on: atri-rpi
+    needs: atrifact-producer
+    steps:
+      - name: Download Atrifact
+        uses: actions/download-artifact@v4
+        with:
+          name: example-atrifact
+
+      - name: See Atrifact File
+        run: cat atrifact.txt
