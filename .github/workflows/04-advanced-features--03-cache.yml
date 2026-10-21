@@ -1,0 +1,38 @@
+name: Cache
+
+on:
+  workflow_dispatch:
+
+jobs:
+  actions-cache:
+    name: Demo Cache
+    runs-on: atri-rpi
+    steps:
+      # Attempt to restore cache (will miss on first run)
+      - name: Restore Cache
+        id: demo-cache
+        uses: actions/cache@v4
+        with:
+          path: demo-cache
+          key: demo-cache-v1
+
+      # Populate directory only on miss
+      - name: Populate Cache Directory
+        if: steps.demo-cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache miss - generating cache"
+          mkdir -p demo-cache
+          date > demo-cache/timestamp.txt
+
+      # Save cache only if we generated new content
+      - name: Save Cache
+        if: steps.demo-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: demo-cache
+          key: demo-cache-v1
+        
+      - name: Verify Cache Status
+        run: |
+          echo "cache-hit? -> ${{steps.demo-cache.outputs.cache-hit}}"
+          cat demo-cache/timestamp.txt
